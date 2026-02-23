@@ -4,9 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safe Cracking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #0f0f1a;
+            color: #e0e0ff;
+            min-height: 100vh;
+        }
+        .header {
+            background: #6b48ff;           /* насыщенный фиолетовый */
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+        .title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #ffffff;                /* белый / очень светлый */
+            letter-spacing: 0.5px;
+        }
+        .main-content {
+            padding: 40px 24px;
+            text-align: center;
+        }
+        .main-content p {
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 24px auto;
+            line-height: 1.5;
+        }
+        a {
+            color: #a78bfa;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Safe Cracking!</h1>
-    <p>This is the official site for the Safe Cracking game. Check our <a href="https://sites.google.com/view/safecrackinggame/english">Privacy Policy</a>.</p>
+
+    <header class="header">
+        <img src="open.png" alt="Safe Cracking logo" class="logo">
+        <h1 class="title">Welcome to Safe Cracking site!</h1>
+    </header>
+
+    <div class="main-content">
+        <p>This is the official site for the Safe Cracking game.<br>
+        Check our <a href="https://sites.google.com/view/safecrackinggame/english">Privacy Policy</a>.</p>
+    </div>
+
 </body>
 </html>
