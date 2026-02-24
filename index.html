@@ -145,7 +145,7 @@
 <body>
 
 <header class="header">
-    <a href="https://safecracking.github.io" title="Back to Home">
+    <a href="https://safecracking.github.io/" title="Back to Home">
         <img src="open.png" alt="Safe Cracking logo" class="logo">
     </a>
     <h1 class="title">Welcome to the Safe Cracking Hall of Fame!</h1>
@@ -186,7 +186,7 @@
 
 <!-- Hall of Fame list (always visible below) -->
 <div id="hall" class="hall">
-    <h2 style="margin-bottom: 20px; color: #a78bfa;">Hall of Fame</h2>
+    <h2 style="margin-bottom: 20px; color: #a78bfa; font-size: 2.2rem;">⭐️Hall of Fame⭐️</h2>
 
     <!-- Кнопка сортировки — вставляем сюда -->
     <div style="margin: 0 0 16px 0; text-align: right;">
@@ -232,7 +232,6 @@ document.getElementById("submit-btn").addEventListener("click", () => {
 
         // Load Hall of Fame from Google Sheet (CSV export)
         // IMPORTANT: Make sure the spreadsheet is shared publicly ("Anyone with the link" → Viewer)
-        // Load Hall of Fame from Google Sheet (CSV export)
         const SHEET_ID = "1TKM4CuHTfiR_fGZhYCEKZ5GQcjX6W9oQkS_NlC9TFkg";
         const GID = "567171541";
         const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
