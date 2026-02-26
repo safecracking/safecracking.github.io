@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safe Cracking Merch Shop</title>
+    <title>Safe Cracking Hall of Fame</title>
     <style>
         * {
             margin: 0;
@@ -18,8 +18,8 @@
             line-height: 1.5;
         }
         .header {
-            background: #6b48ff;
-            padding: 14px 24px;
+            background: #662CC5;
+            padding: 8px 30px;
             display: flex;
             align-items: center;
             gap: 16px;
@@ -32,44 +32,112 @@
         }
         .title {
             font-size: 1.5rem;
-            font-weight: 800;
+            font-weight: 700;
             color: #ffffff;
-            letter-spacing: 0.8px;
-            text-shadow: 0 2px 6px rgba(107,72,255,0.4);
+            letter-spacing: 0.5px;
         }
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 60px 24px;
+            padding: 40px 24px;
             text-align: center;
         }
-        h2 {
-            font-size: 1.8rem;
-            color: #a78bfa;
-            margin: 40px 0 20px;
-        }
-        p {
-            font-size: 1.2rem;
+        .intro, .success, .hall {
+            font-size: 1.15rem;
             max-width: 760px;
-            margin: 0 auto 32px;
+            margin: 24px auto;
         }
-        .coming-soon {
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: #c4b5fd;
-            margin: 60px 0;
-            text-shadow: 0 4px 12px rgba(196,181,253,0.3);
+        .password-section {
+            margin: 40px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
         }
-        .coming-soon span {
-            font-size: 2.2rem;
+        .password-section label {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        #password-input {
+            padding: 10px 14px;
+            font-size: 1.2rem;
+            width: 220px;
+            border: 2px solid #6b48ff;
+            border-radius: 6px;
+            background: #1a1a2e;
             color: #e0e0ff;
         }
-        a {
-            color: #a78bfa;
+        #password-input:focus {
+            outline: none;
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 3px rgba(167,139,250,0.3);
+        }
+        #submit-btn {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            background: #6b48ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #submit-btn:hover {
+            background: #7c5aff;
+        }
+        #error {
+            color: #ff6b6b;
+            font-weight: 500;
+            font-size: 1.1rem;
+            margin-left: 12px;
+        }
+        .form-embed {
+            margin: 32px auto;
+            max-width: 760px;
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #4a3a99;
+        }
+        iframe {
+            width: 100%;
+            min-height: 620px;
+            border: none;
+            border-radius: 8px;
+        }
+        .hall-list {
+            margin-top: 40px;
+            text-align: left;
+        }
+        .player {
+            font-size: 1.25rem;
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #3a2a77;
+        }
+        .player a {
+            color: #c4b5fd;
             text-decoration: none;
             font-weight: 600;
         }
-        a:hover {
+        .player a:hover {
+            color: #ddd6fe;
+            text-decoration: underline;
+        }
+        .country {
+            color: #a0a0cc;
+            font-size: 0.95rem;
+        }
+        .date {
+        color: #a0a0cc;
+        font-size: 0.92rem;
+        font-style: italic;
+        }
+        a.external {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+        a.external:hover {
             text-decoration: underline;
         }
     </style>
@@ -80,18 +148,204 @@
     <a href="https://safecracking.github.io/" title="Back to Home">
         <img src="open.png" alt="Safe Cracking logo" class="logo">
     </a>
-    <h1 class="title">Welcome to the Safe Cracking Merch Shop!</h1>
+    <h1 class="title">Welcome to the Safe Cracking Hall of Fame!</h1>
 </header>
 
-<div class="container">
-    <h2>Coming Soon</h2>
-    <p class="coming-soon">Merch store <span>🔥</span><br>very soon!</p>
-    
-    <p>We're preparing exclusive Safe Cracking merch: t-shirts, hoodies, stickers, mugs and more.<br>
-    Stay tuned — we'll announce the launch here and in the game updates.</p>
+    <div class="container">
 
-    <p>Want to be the first to know? Follow us on <a href="https://play.google.com/store/apps/details?id=com.scg.safecrackergame" target="_blank">Google Play</a> or check back later!</p>
+        <!-- Intro block (shown by default) -->
+        <div id="intro" class="intro">
+            <p>Entry to the <strong>Safe Cracking Hall of Fame</strong> is only possible with the main password.<br>
+            Don't know the main password? You can obtain it in the game <strong>Safe Cracking</strong> — <a href="https://play.google.com/store/apps/details?id=com.scg.safecrackergame" class="external" target="_blank">download on Google Play</a>.</p>
+        </div>
+
+        <!-- Password input -->
+<div class="password-section" id="password-section">
+    <label>Main Password:</label>
+    <input type="password" id="password-input" placeholder="Enter password">
+    <button id="submit-btn">Submit</button>
+    <span id="error"></span>
+    <small id="password-hint" style="display: none; color: #a0a0cc; font-size: 0.9rem; margin-top: 8px;">
+        Note: the secret phrase and the password in the game change periodically. Follow the game updates.
+    </small>
 </div>
+
+        <!-- Success block + form (hidden initially) -->
+        <div id="success" class="success" style="display:none;">
+            <p><strong>Congratulations!</strong> If you entered the correct password, it means you did a <strong>great job</strong> cracking many safes in <strong>Safe Cracking!</strong><br>
+            This is the official <strong>Hall of Fame</strong> — everyone who gets here has earned the right to leave their mark.<br>
+            Fill out the form below and your details will appear in the Hall of Fame after review (usually within a day or two).</p>
+
+            <div class="form-embed">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe2KOeYhkpLIegUIoiYt_V0OOD-zp7_nZpJofZAkUSZXBl_JA/viewform?embedded=true" 
+                        width="760" height="620" frameborder="0" marginheight="0" marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+        </div>
+
+<!-- Hall of Fame list (always visible below) -->
+<div id="hall" class="hall">
+    <h2 style="margin-bottom: 20px; color: #a78bfa; font-size: 2.2rem;">⭐️Hall of Fame⭐️</h2>
+
+    <!-- Кнопка сортировки — вставляем сюда -->
+    <div style="margin: 0 0 16px 0; text-align: right;">
+        <button id="sort-btn" style="padding: 8px 16px; font-size: 1rem; background: #4a3a99; color: #e0e0ff; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s;">
+            Newest first ▼
+        </button>
+    </div>
+
+    <div class="hall-list" id="hall-list">
+        <p>Loading participants...</p>
+    </div>
+</div>
+
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD_LOWER = "8ph3nvl7";  // lowercase version for case-insensitive check
+
+        // Password check
+document.getElementById("submit-btn").addEventListener("click", () => {
+    const input = document.getElementById("password-input").value.trim();
+    const errorEl = document.getElementById("error");
+    const hintEl = document.getElementById("password-hint");
+
+    if (input.toLowerCase() === CORRECT_PASSWORD_LOWER) {
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("password-section").style.display = "none";
+        document.getElementById("success").style.display = "block";
+        errorEl.textContent = "";
+        hintEl.style.display = "none";  // скрываем подсказку при успехе
+    } else {
+        errorEl.textContent = "Wrong Password, try again";
+        hintEl.style.display = "block";  // показываем подсказку при ошибке
+    }
+});
+
+        // Allow Enter key to submit
+        document.getElementById("password-input").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                document.getElementById("submit-btn").click();
+            }
+        });
+
+        // Load Hall of Fame from Google Sheet (CSV export)
+        // IMPORTANT: Make sure the spreadsheet is shared publicly ("Anyone with the link" → Viewer)
+        const SHEET_ID = "1TKM4CuHTfiR_fGZhYCEKZ5GQcjX6W9oQkS_NlC9TFkg";
+        const GID = "567171541";
+        const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}`;
+
+        let sortNewestFirst = true;     // по умолчанию новые сверху
+        let allRows = [];
+
+        fetch(csvUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("Sheet not public or wrong gid");
+                return response.text();
+            })
+            .then(csvText => {
+                allRows = csvText.split("\n").slice(1); // сохраняем один раз
+
+                renderHall(); // первая отрисовка — новые сверху
+
+                const sortBtn = document.getElementById("sort-btn");
+                if (sortBtn) {
+                    sortBtn.addEventListener("click", () => {
+                        sortNewestFirst = !sortNewestFirst;
+                        sortBtn.textContent = sortNewestFirst ? "Newest first ▼" : "Oldest first ▲";
+                        renderHall();
+                    });
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                const hallList = document.getElementById("hall-list");
+                if (hallList) {
+                    hallList.innerHTML = "<p>Could not load Hall of Fame. Make sure the sheet is shared publicly (Anyone with the link → Viewer).</p>";
+                }
+            });
+
+        // Функция отрисовки
+        function renderHall() {
+            const container = document.getElementById("hall-list");
+            if (!container) return;
+
+            container.innerHTML = "";
+
+            let rowsToShow = [...allRows];
+
+            // По умолчанию новые сверху — переворачиваем массив
+            if (sortNewestFirst) {
+                rowsToShow.reverse();
+            }
+            // Если !sortNewestFirst — оставляем как есть (старые сверху, новые снизу)
+
+            if (rowsToShow.length === 0) {
+                container.innerHTML = "<p>No participants yet. Be the first!</p>";
+                return;
+            }
+
+            rowsToShow.forEach(row => {
+                if (!row.trim()) return;
+
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+
+                const nameRaw  = (cols[2] || "").trim().replace(/^"|"$/g, "") || "Anonymous";
+                const linkRaw  = (cols[3] || "").trim().replace(/^"|"$/g, "") || "";
+                const country  = (cols[4] || "").trim().replace(/^"|"$/g, "") || "";
+
+                let show = true;
+                if (cols.length >= 6) {
+                    const approve = (cols[5] || "").trim().toLowerCase().replace(/^"|"$/g, "");
+                    show = (approve === "yes" || approve === "1" || approve === "true");
+                }
+
+                if (!show) return;
+
+                let datePart = "";
+                if (cols[0]) {
+                    const timestamp = cols[0].trim().replace(/^"|"$/g, "");
+                    const dateStr = timestamp.split(" ")[0];
+
+                    if (dateStr && dateStr.includes(".")) {
+                        const [day, month, year] = dateStr.split(".");
+                        if (day && month && year) {
+                            const months = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                            const m = parseInt(month, 10);
+                            if (m >= 1 && m <= 12) {
+                                datePart = `${day} ${months[m]} ${year}`;
+                            }
+                        }
+                    }
+                }
+
+                let link = linkRaw;
+                if (link && !link.match(/^https?:\/\//i)) {
+                    link = "https://" + link;
+                }
+
+                const display = link 
+                    ? `<a href="${link}" target="_blank" rel="noopener noreferrer">${nameRaw}</a>`
+                    : nameRaw;
+
+                const countryPart = country ? `, <span class="country">${country}</span>` : "";
+                const dateSpan    = datePart  ? `, <span class="date">${datePart}</span>`   : "";
+
+                const div = document.createElement("div");
+                div.className = "player";
+                div.innerHTML = `${display}${countryPart}${dateSpan}`;
+                container.appendChild(div);
+            });
+        }
+    </script>
+
+    <div class="main-content">
+        <p style="text-align: center; max-width: 600px; margin: 0 auto;">
+            This is the official site for the Safe Cracking game.<br>
+            Check our <a href="https://sites.google.com/view/safecrackinggame/english">Privacy Policy</a>.
+        </p>
+    </div>
 
 </body>
 </html>
