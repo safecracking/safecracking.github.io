@@ -1,48 +1,230 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Safe Cracking Merch</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
             background: #0f0f1a;
             color: #e0e0ff;
+            min-height: 100vh;
+            line-height: 1.6;
         }
+
+        /* Верхняя полоса */
+        .header {
+            background: #662CC5;
+            padding: 12px 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+        .title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        /* Подзаголовок */
+        .subtitle {
+            text-align: center;
+            padding: 30px 20px 20px;
+            font-size: 1.1rem; /* в два раза меньше заголовка */
+            color: #d0d0ff;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* Контейнер */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
-        h1 {
-            text-align: center;
+
+        h2 {
             color: #a78bfa;
+            text-align: center;
+            margin: 50px 0 30px;
+            font-size: 2.2rem;
         }
+
+        /* Баннер вместо Promo Slider */
+        .promo-banner {
+            background: linear-gradient(135deg, #1a1a2e, #2a1a4a);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto 60px;
+            max-width: 1000px;
+            box-shadow: 0 8px 30px rgba(102,44,197,0.3);
+        }
+        .promo-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Блок магазина */
         #my-ecwid-store {
-            min-height: 600px; /* чтобы не было пустоты при загрузке */
+            min-height: 800px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #4a3a99;
+        }
+
+        /* About Us */
+        .about {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            border: 1px solid #4a3a99;
+        }
+        .about p {
+            font-size: 1.15rem;
+            margin-bottom: 1.2em;
+        }
+
+        /* Delivery Info */
+        .delivery {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            border: 1px solid #4a3a99;
+        }
+        .delivery ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .delivery li {
+            margin: 12px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Form */
+        .contact {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            border: 1px solid #4a3a99;
+        }
+        .contact iframe {
+            width: 100%;
+            min-height: 620px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #a0a0cc;
+            font-size: 0.95rem;
+        }
+        footer a {
+            color: #a78bfa;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <!-- Верхняя полоса -->
+    <header class="header">
+        <a href="https://safecracking.github.io/" title="Back to Home">
+            <img src="open.png" alt="Safe Cracking logo" class="logo">
+        </a>
+        <h1 class="title">Safe Cracking Merch</h1>
+    </header>
+
     <div class="container">
-        <h1>Safe Cracking Merch</h1>
-        
-        <!-- Здесь будет встроенный магазин Ecwid -->
+        <!-- Подзаголовок -->
+        <div class="subtitle">
+            Treat yourself to champion gear — grab official Safe Cracking merch!
+        </div>
+
+        <!-- Баннер вместо Promo Slider (замени картинку на свою) -->
+        <div class="promo-banner">
+            <img src="https://via.placeholder.com/1000x400/662CC5/ffffff?text=Safe+Cracking+Merch+Banner" alt="Promo Banner">
+        </div>
+
+        <!-- Магазин Ecwid -->
+        <h2>Our Merch</h2>
         <div id="my-ecwid-store"></div>
 
-        <!-- Код встраивания Ecwid -->
-        <script data-cfasync="false" type="text/javascript"
-                src="https://app.ecwid.com/script.js?131954754&data_platform=code"
-                charset="utf-8"></script>
-        <script type="text/javascript">
-            xProductBrowser("categoriesPerRow=3",
-                            "views=grid list",
-                            "categoryView=grid",
-                            "searchView=list",
-                            "id=my-ecwid-store");
-        </script>
+        <!-- About Us -->
+        <section class="about">
+            <h2>About Us</h2>
+            <p>We crack safes. We break locks. We make legends.</p>
+            <p>Safe Cracking isn’t just a game. It’s a lifestyle for those who aren’t afraid to take what’s theirs. And now you can wear that lifestyle.</p>
+            <p>Official merch for real champions. Many safes were cracked… by players like you.</p>
+            <p>Crack on.</p>
+        </section>
+
+        <!-- Delivery Info -->
+        <section class="delivery">
+            <h2>Delivery & Returns</h2>
+            <p>All items are made-to-order through Printful (print-on-demand service). This means your merch is printed fresh after your order — quality is high, but delivery takes longer than in regular stores.</p>
+            <ul>
+                <li><strong>Production time:</strong> 2–5 business days</li>
+                <li><strong>Shipping time (Europe/Ukraine):</strong> 4–10 business days</li>
+                <li><strong>Total delivery:</strong> usually 7–15 business days</li>
+                <li><strong>Returns:</strong> no returns for change of mind (made-to-order). For defects/damage — 30-day claim period. Send us photos + order number — we’ll handle replacement or refund through Printful.</li>
+                <li><strong>Shipping cost:</strong> calculated at checkout (real rates from Printful, usually $5–$10 to Ukraine/EU)</li>
+            </ul>
+            <p>Questions? Write us — we’ll check status and help.</p>
+        </section>
+
+        <!-- Contact Form -->
+        <section class="contact">
+            <h2>Contact Us</h2>
+            <p>Got questions about order, delivery, defects or anything else? Fill the form below or write directly to support.</p>
+            <div class="form-embed">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe2KOeYhkpLIegUIoiYt_V0OOD-zp7_nZpJofZAkUSZXBl_JA/viewform?embedded=true"
+                        width="100%" height="620" frameborder="0" marginheight="0" marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+        </section>
     </div>
+
+    <!-- Встраивание магазина Ecwid -->
+    <script data-cfasync="false" type="text/javascript"
+            src="https://app.ecwid.com/script.js?131954754&data_platform=code"
+            charset="utf-8"></script>
+    <script type="text/javascript">
+        xProductBrowser("categoriesPerRow=3",
+                        "views=grid list",
+                        "categoryView=grid",
+                        "searchView=list",
+                        "id=my-ecwid-store");
+    </script>
+
+    <footer>
+        <p>© Safe Cracking 2026 | Official merch store</p>
+        <p><a href="mailto:support@safecracking.com">support@safecracking.com</a></p>
+    </footer>
 </body>
 </html>
