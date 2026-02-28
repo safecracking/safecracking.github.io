@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Safe Cracking</title>
+    <title>Safe Cracking Merch</title>
 
-    <!-- Google tag (gtag.js) - если уже вставлен на других страницах -->
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7FEJGSZ9C9"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -15,7 +14,7 @@
       gtag('config', 'G-7FEJGSZ9C9');
     </script>
 
-    <!-- Favicon и тема -->
+    <!-- Favicon -->
     <link rel="icon" href="/open.png" type="image/png">
     <link rel="apple-touch-icon" sizes="180x180" href="/open.png">
     <meta name="theme-color" content="#662CC5">
@@ -34,17 +33,14 @@
             line-height: 1.6;
         }
 
-        /* Верхняя полоса — как на merch и главной */
+        /* Верхняя полоса — точная копия с главной страницы */
         .header {
             background: #662CC5;
             padding: 8px 30px;
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
         }
         .logo {
             width: 48px;
@@ -52,49 +48,73 @@
             object-fit: contain;
         }
         .title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 0.5px;
         }
 
-        /* Контейнер и текст */
-        .container {
+        /* Остальной стиль — без изменений */
+        .subtitle {
+            text-align: center;
+            padding: 30px 20px 20px;
+            font-size: 1.1rem;
+            color: #d0d0ff;
             max-width: 900px;
             margin: 0 auto;
-            padding: 40px 24px;
         }
-        h1 {
-            color: #a78bfa;
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 2.5rem;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
         h2 {
             color: #a78bfa;
-            margin: 40px 0 20px;
-            font-size: 1.8rem;
+            text-align: center;
+            margin: 50px 0 30px;
+            font-size: 2.2rem;
         }
-        p, li {
+        .promo-banner {
+            background: linear-gradient(135deg, #1a1a2e, #2a1a4a);
+            border-radius: 16px;
+            overflow: hidden;
+            margin: 0 auto 60px;
+            max-width: 1000px;
+            box-shadow: 0 8px 30px rgba(102,44,197,0.3);
+        }
+        .promo-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        #my-ecwid-store {
+            min-height: 800px;
+            background: #1a1a2e;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #4a3a99;
+        }
+        .about, .delivery, .contact {
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            border: 1px solid #4a3a99;
+        }
+        .about p, .delivery p, .delivery li, .contact p {
             font-size: 1.15rem;
             margin-bottom: 1.2em;
-            color: #d0d0ff;
         }
-        strong {
-            color: #ffffff;
+        .delivery ul {
+            list-style: none;
+            padding-left: 0;
         }
-        ul {
-            padding-left: 30px;
-            list-style-type: disc;
+        .contact iframe {
+            width: 100%;
+            min-height: 620px;
+            border: none;
+            border-radius: 8px;
         }
-        a {
-            color: #a78bfa;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -103,11 +123,15 @@
         }
         footer a {
             color: #a78bfa;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <!-- Верхняя полоса -->
+    <!-- Верхняя полоса — точная копия с главной -->
     <header class="header">
         <a href="/" title="Back to Home">
             <img src="open.png" alt="Safe Cracking logo" class="logo">
@@ -116,56 +140,66 @@
     </header>
 
     <div class="container">
-        <h1>Privacy Policy</h1>
+        <div class="subtitle">
+            Treat yourself to champion gear — grab official Safe Cracking merch!
+        </div>
 
-        <p>This Privacy Policy describes how the mobile application "Safe Cracking" (hereinafter – "the Application"), developed by SmartPuzzleGames, processes user information.</p>
+        <div class="promo-banner">
+            <img src="promo.png" alt="Promo Banner">
+        </div>
 
-        <h2>1. Information Collection and Use</h2>
-        <p>The "Safe Cracking" Application itself does not collect or store any personal information that could identify you, such as your name, email address, location, photos, or contacts. All data necessary for gameplay (e.g., progress, record time, coins, selected difficulty, and language) is stored locally on your device and is not transmitted to us or third parties.</p>
+        <h2>Champion Collection</h2>
+        <div id="my-ecwid-store"></div>
 
-        <h2>2. Third-Party Services</h2>
-        <p>The Application uses third-party services that may collect information for their own purposes.</p>
+        <section class="about">
+            <h2>About Us</h2>
+            <p>We crack safes. We break locks. We make legends.</p>
+            <p>Safe Cracking isn’t just a game. It’s a lifestyle for those who outsmart every lock and crack the uncrackable.</p>
+            <p>And now you can wear that lifestyle.</p>
+            <p>Official merch for real Champions. Many safes were cracked… by players like you.</p>
+            <p>Crack on.</p>
+        </section>
 
-        <h3>2.1. Google Play Services</h3>
-        <p>The Application uses Google Play Services, provided by Google LLC. Google Play Services are necessary for the basic functions of the Application (e.g., for license verification, application updates) and may collect anonymous usage and diagnostic data.</p>
-        <p>For more information on the Google Play Services Privacy Policy, please visit: <a href="https://policies.google.com/privacy" target="_blank">https://policies.google.com/privacy</a></p>
+        <section class="delivery">
+            <h2>Delivery & Returns</h2>
+            <p>All items are made-to-order. This means your merch is printed fresh after your order — quality is high, but delivery takes longer than in regular stores.</p>
+            <ul>
+                <li><strong>Production time:</strong> 2–5 business days</li>
+                <li><strong>Shipping time:</strong> 4–10 business days</li>
+                <li><strong>Total delivery:</strong> usually 7–15 business days</li>
+                <li><strong>Returns:</strong> no returns for change of mind (made-to-order). For defects/damage — 30-day claim period. Send us photos + order number — we’ll handle replacement or refund.</li>
+                <li><strong>Shipping cost:</strong> calculated at checkout, usually $5–$10</li>
+            </ul>
+            <p>Questions? Write us — we’ll check status and help.</p>
+        </section>
 
-        <h3>2.2. Advertising Services (Google AdMob)</h3>
-        <p>To support the development and free provision of the Application, we use the Google AdMob advertising platform. AdMob may collect data about your device and the use of the Application to display personalized advertisements. This data may include:</p>
-        <ul>
-            <li>IP address</li>
-            <li>Device identifier (e.g., Android Advertising ID)</li>
-            <li>Data about your device (type, operating system)</li>
-            <li>Data on interaction with ads and the Application</li>
-            <li>Other technical data</li>
-        </ul>
-        <p>The purpose of collecting this data is to provide relevant advertising and analyze its effectiveness. Google AdMob may use cookies and other tracking technologies for this purpose.</p>
-        <p>For more information on how Google uses data for advertising purposes, please visit: <a href="https://policies.google.com/technologies/ads" target="_blank">https://policies.google.com/technologies/ads</a></p>
-        <p>For more information on the Google AdMob Privacy Policy, please visit: <a href="https://support.google.com/admob/answer/6128543" target="_blank">https://support.google.com/admob/answer/6128543</a></p>
-
-        <h2>3. Log Data</h2>
-        <p>In case of an error in the Application, we collect data and information (through third-party products) called Log Data. This Log Data may include information such as your device's IP address, device name, operating system version, the configuration of the Application when utilizing the service, the time and date of your use of the service, and other statistics. This data is used solely for diagnosing and improving the Application's operation.</p>
-
-        <h2>4. Security</h2>
-        <p>We value your trust in providing us your (albeit anonymous) information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.</p>
-
-        <h2>5. Links to Other Sites</h2>
-        <p>This Application may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policies of these websites. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services.</p>
-
-        <h2>6. Children’s Privacy</h2>
-        <p>Our Application is not intended for children under the age of 13. We do not knowingly collect personally identifiable information from children under 13. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us. If we become aware that a child under 13 has provided us with personal information, we will delete such information from our servers immediately.</p>
-
-        <h2>7. Changes to This Privacy Policy</h2>
-        <p>We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-        <p>This policy is effective as of June 13, 2025.</p>
-
-        <h2>8. Contact Us</h2>
-        <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at:</p>
-        <p><strong>Email:</strong> <a href="mailto:safecrackinggame@gmail.com">safecrackinggame@gmail.com</a></p>
+        <section class="contact">
+            <h2>Contact Us</h2>
+            <p>Got questions about order, delivery, defects or anything else? Fill the form below or write directly to support: <a href="mailto:merch@safecracking.app">merch@safecracking.app</a>.</p>
+            <div class="form-embed">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfcJOxibtJj_awqc0ACMPfQKiOT62Sabw4KUwGj4sGvEqk1FA/viewform?embedded=true"
+                        width="100%" height="620" frameborder="0" marginheight="0" marginwidth="0">
+                    Loading…
+                </iframe>
+            </div>
+        </section>
     </div>
 
+    <!-- Встраивание магазина Ecwid -->
+    <script data-cfasync="false" type="text/javascript"
+            src="https://app.ecwid.com/script.js?131954754&data_platform=code"
+            charset="utf-8"></script>
+    <script type="text/javascript">
+        xProductBrowser("categoriesPerRow=3",
+                        "views=grid list",
+                        "categoryView=grid",
+                        "searchView=list",
+                        "id=my-ecwid-store");
+    </script>
+
     <footer>
-        <p>© Safe Cracking 2026 | <a href="/">Back to Home</a></p>
+        <p>© Safe Cracking 2026 | Official merch store</p>
+        <p>Check our <a href="/privacy">Privacy Policy</a>.</p>
     </footer>
 </body>
 </html>
