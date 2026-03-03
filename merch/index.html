@@ -75,18 +75,85 @@
             font-size: 2.2rem;
         }
 
-        /* Баннер вместо Promo Slider */
+        /* Promo Carousel */
 .promo-banner {
-    /* убрать aspect-ratio */
-    min-height: 400px;          /* или сколько тебе комфортно */
+    background: linear-gradient(135deg, #1a1a2e, #2a1a4a);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 60px;
+    max-width: 1000px;
+    box-shadow: 0 8px 30px rgba(102,44,197,0.3);
+    position: relative;
     height: auto;
-    max-height: 720px;
+}
+
+.promo-banner .slides {
+    display: flex;
+    width: 100%;
+    transition: transform 0.7s ease-in-out;
+}
+
+.promo-banner .slide {
+    flex: 0 0 100%;
+    width: 100%;
 }
 
 .promo-banner img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;          /* обрезает края, но заполняет весь блок */
+    height: auto;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Стрелки */
+.promo-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.45);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.promo-arrow:hover { opacity: 1; }
+.promo-arrow.prev { left: 12px; }
+.promo-arrow.next { right: 12px; }
+
+/* Точки (индикаторы) */
+.promo-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.promo-dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.promo-dot.active {
+    background: #a78bfa;
+    transform: scale(1.3);
 }
 
         /* Блок магазина */
@@ -156,87 +223,6 @@
         footer a:hover {
             text-decoration: underline;
         }
-    /* ──────────────────────────────────────────────
-   Promo Carousel
-─────────────────────────────────────────────── */
-.promo-banner {
-    position: relative;
-    background: linear-gradient(135deg, #1a1a2e, #2a1a4a);
-    border-radius: 16px;
-    overflow: hidden;
-    margin: 0 auto 60px;
-    max-width: 1000px;
-    box-shadow: 0 8px 30px rgba(102,44,197,0.3);
-    aspect-ratio: 1000 / 500;   /* <-- подберите под ваши картинки, например 2:1 или 16:9 */
-}
-
-.promo-banner .slides {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-.promo-banner .slide {
-    flex: 0 0 100%;
-    width: 100%;
-    height: 100%;
-}
-
-.promo-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* Стрелки */
-.promo-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.4);
-    color: white;
-    border: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    font-size: 1.8rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-    user-select: none;
-}
-
-.promo-arrow:hover { opacity: 1; }
-.promo-arrow.prev { left: 16px; }
-.promo-arrow.next { right: 16px; }
-
-/* Индикаторы (точки) — опционально */
-.promo-dots {
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-}
-
-.promo-dot {
-    width: 10px;
-    height: 10px;
-    background: rgba(255,255,255,0.4);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.promo-dot.active {
-    background: #a78bfa;
-}
     </style>
     <!-- Favicon -->
     <link rel="icon" href="/open.png" type="image/png">
@@ -263,7 +249,7 @@
 
         <!-- Promo Carousel -->
 <div class="promo-banner" id="promo-carousel">
-    <!-- картинки будут вставляться сюда через JS -->
+    <!-- изображения и стрелки будут добавлены через JS -->
 </div>
 
         <!-- Магазин Ecwid -->
@@ -306,7 +292,114 @@
             </div>
         </section>
     </div>
+<!-- Promo Carousel JS -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('promo-carousel');
+    if (!container) return;
 
+    // ←←← Здесь пиши свои картинки через запятую
+    const imagesStr = "promo.png, promo2.png";
+    // или одну:   const imagesStr = "promo.png";
+
+    const images = imagesStr.split(',').map(s => s.trim()).filter(Boolean);
+
+    if (images.length === 0) return;
+
+    // Одна картинка — просто как было
+    if (images.length === 1) {
+        container.innerHTML = `<img src="${images[0]}" alt="Promo">`;
+        return;
+    }
+
+    // ──────────────────────────────── Карусель ────────────────────────────────
+    let current = 0;
+    let autoTimer = null;
+    let manualPauseTimer = null;
+    const AUTO_TIME = 5000;     // 5 сек
+    const MANUAL_TIME = 20000;  // 20 сек после клика
+
+    function build() {
+        let html = '<div class="slides">';
+        images.forEach((src, i) => {
+            html += `<div class="slide"><img src="${src}" alt="Slide ${i+1}"></div>`;
+        });
+        html += '</div>';
+
+        html += `
+            <button class="promo-arrow prev" aria-label="Предыдущий">←</button>
+            <button class="promo-arrow next" aria-label="Следующий">→</button>
+            <div class="promo-dots">`;
+
+        images.forEach((_, i) => {
+            html += `<div class="promo-dot ${i===0?'active':''}" data-i="${i}"></div>`;
+        });
+
+        html += '</div>';
+
+        container.innerHTML = html;
+    }
+
+    function show(index) {
+        current = (index + images.length) % images.length;
+        container.querySelector('.slides').style.transform = `translateX(-${current * 100}%)`;
+
+        // обновляем точки
+        document.querySelectorAll('.promo-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+    }
+
+    function startAuto() {
+        if (autoTimer) clearInterval(autoTimer);
+        autoTimer = setInterval(() => {
+            current = (current + 1) % images.length;
+            show(current);
+        }, AUTO_TIME);
+    }
+
+    function pauseAutoAfterManual() {
+        if (autoTimer) clearInterval(autoTimer);
+        if (manualPauseTimer) clearTimeout(manualPauseTimer);
+
+        manualPauseTimer = setTimeout(() => {
+            startAuto();
+        }, MANUAL_TIME);
+    }
+
+    // События
+    container.addEventListener('click', e => {
+        const t = e.target;
+
+        if (t.classList.contains('next')) {
+            show(current + 1);
+            pauseAutoAfterManual();
+        }
+        else if (t.classList.contains('prev')) {
+            show(current - 1);
+            pauseAutoAfterManual();
+        }
+        else if (t.classList.contains('promo-dot')) {
+            const idx = parseInt(t.getAttribute('data-i'));
+            show(idx);
+            pauseAutoAfterManual();
+        }
+    });
+
+    // Старт
+    build();
+    show(0);
+    startAuto();
+
+    // Пауза при наведении (опционально, можно удалить эти 8 строк)
+    container.addEventListener('mouseenter', () => {
+        if (autoTimer) clearInterval(autoTimer);
+    });
+    container.addEventListener('mouseleave', () => {
+        if (!manualPauseTimer) startAuto();
+    });
+});
+</script>
     <!-- Встраивание магазина Ecwid -->
     <script data-cfasync="false" type="text/javascript"
             src="https://app.ecwid.com/script.js?131954754&data_platform=code"
@@ -323,122 +416,5 @@
         <p>© Safe Cracking 2026 | Official merch store</p>
         Check our <a href="/privacy">Privacy Policy</a>.
     </footer>
-    <!-- Promo Carousel logic -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('promo-carousel');
-        if (!container) return;
-
-        // ←←← Здесь укажите имена файлов через запятую
-        const imagesStr = "promo.png,promo2.png";
-        //                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-        //                     поменяйте на свои имена файлов
-
-        const images = imagesStr
-            .split(',')
-            .map(s => s.trim())
-            .filter(Boolean);
-
-        if (images.length === 0) return;
-
-        // Если только одна картинка — показываем как раньше
-        if (images.length === 1) {
-            container.innerHTML = `<img src="${images[0]}" alt="Promo Banner">`;
-            return;
-        }
-
-        // ── Карусель ───────────────────────────────────────
-        let currentIndex = 0;
-        let autoInterval = null;
-        let isManualMode = false;
-        const AUTO_DELAY = 5000;     // 5 секунд в авто-режиме
-        const MANUAL_DELAY = 20000;  // 20 секунд после ручного действия
-
-        function buildCarousel() {
-            let html = '<div class="slides">';
-
-            images.forEach((src, i) => {
-                html += `<div class="slide"><img src="${src}" alt="Promo ${i+1}"></div>`;
-            });
-
-            html += '</div>';
-
-            // Стрелки
-            html += `
-                <button class="promo-arrow prev" aria-label="Previous">←</button>
-                <button class="promo-arrow next" aria-label="Next">→</button>
-            `;
-
-            // Точки (индикаторы)
-            html += '<div class="promo-dots">';
-            images.forEach((_, i) => {
-                html += `<div class="promo-dot ${i===0 ? 'active' : ''}" data-index="${i}"></div>`;
-            });
-            html += '</div>';
-
-            container.innerHTML = html;
-        }
-
-        function goTo(index) {
-            currentIndex = (index + images.length) % images.length;
-            const slides = container.querySelector('.slides');
-            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-            // обновляем точки
-            container.querySelectorAll('.promo-dot').forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentIndex);
-            });
-        }
-
-        function startAuto() {
-            if (autoInterval) clearInterval(autoInterval);
-            autoInterval = setInterval(() => {
-                currentIndex = (currentIndex + 1) % images.length;
-                goTo(currentIndex);
-            }, AUTO_DELAY);
-        }
-
-        function restartAutoAfterManual() {
-            if (autoInterval) clearInterval(autoInterval);
-            isManualMode = true;
-
-            setTimeout(() => {
-                isManualMode = false;
-                startAuto();
-            }, MANUAL_DELAY);
-        }
-
-        // ── События ────────────────────────────────────────
-        container.addEventListener('click', e => {
-            const t = e.target;
-
-            if (t.classList.contains('next')) {
-                goTo(currentIndex + 1);
-                restartAutoAfterManual();
-            }
-            else if (t.classList.contains('prev')) {
-                goTo(currentIndex - 1);
-                restartAutoAfterManual();
-            }
-            else if (t.classList.contains('promo-dot')) {
-                const idx = parseInt(t.dataset.index, 10);
-                goTo(idx);
-                restartAutoAfterManual();
-            }
-        });
-
-        // Старт
-        buildCarousel();
-        startAuto();
-
-        // Пауза при наведении (опционально, можно убрать)
-        container.addEventListener('mouseenter', () => {
-            if (autoInterval) clearInterval(autoInterval);
-        });
-        container.addEventListener('mouseleave', () => {
-            if (!isManualMode) startAuto();
-        });
-    });
-</script>
 </body>
 </html>
