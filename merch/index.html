@@ -106,31 +106,6 @@
     object-position: center;
 }
 
-/* Стрелки */
-.promo-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.45);
-    color: white;
-    border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.8;
-    transition: opacity 0.2s;
-    z-index: 10;
-}
-
-.promo-arrow:hover { opacity: 1; }
-.promo-arrow.prev { left: 12px; }
-.promo-arrow.next { right: 12px; }
-
 /* Точки (индикаторы) */
 .promo-dots {
     position: absolute;
@@ -154,6 +129,47 @@
 .promo-dot.active {
     background: #a78bfa;
     transform: scale(1.3);
+}
+/* Кликабельные половины для переключения */
+.promo-banner .slides {
+    position: relative;
+}
+
+.promo-banner .slide {
+    position: relative;
+}
+
+.promo-banner .nav-left,
+.promo-banner .nav-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.promo-banner .nav-left {
+    left: 0;
+}
+
+.promo-banner .nav-right {
+    right: 0;
+}
+
+/* Опционально: лёгкий намёк при наведении (можно убрать) */
+.promo-banner .nav-left:hover,
+.promo-banner .nav-right:hover {
+    background: rgba(0,0,0,0.08);
+    transition: background 0.2s;
+}
+
+/* На мобильных можно сделать области чуть больше или убрать hover-эффект */
+@media (max-width: 768px) {
+    .promo-banner .nav-left:hover,
+    .promo-banner .nav-right:hover {
+        background: transparent;
+    }
 }
 
         /* Блок магазина */
@@ -320,24 +336,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const MANUAL_TIME = 20000;  // 20 сек после клика
 
     function build() {
-        let html = '<div class="slides">';
-        images.forEach((src, i) => {
-            html += `<div class="slide"><img src="${src}" alt="Slide ${i+1}"></div>`;
-        });
-        html += '</div>';
+    let html = '<div class="slides">';
+    images.forEach((src, i) => {
+        html += `<div class="slide"><img src="${src}" alt="Slide ${i+1}"></div>`;
+    });
+    html += '</div>';
 
-        html += `
-            <button class="promo-arrow prev" aria-label="Предыдущий">←</button>
-            <button class="promo-arrow next" aria-label="Следующий">→</button>
-            <div class="promo-dots">`;
+    // Стрелки убраны
 
-        images.forEach((_, i) => {
-            html += `<div class="promo-dot ${i===0?'active':''}" data-i="${i}"></div>`;
-        });
+    html += '<div class="promo-dots">';
+    images.forEach((_, i) => {
+        html += `<div class="promo-dot ${i===0?'active':''}" data-i="${i}"></div>`;
+    });
+    html += '</div>';
 
-        html += '</div>';
-
-        container.innerHTML = html;
+    container.innerHTML = html;
     }
 
     function show(index) {
@@ -367,24 +380,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }, MANUAL_TIME);
     }
 
-    // События
+    // События — клик по половине фото + точки
     container.addEventListener('click', e => {
-        const t = e.target;
+    const t = e.target;
 
-        if (t.classList.contains('next')) {
-            show(current + 1);
-            pauseAutoAfterManual();
-        }
-        else if (t.classList.contains('prev')) {
-            show(current - 1);
-            pauseAutoAfterManual();
-        }
-        else if (t.classList.contains('promo-dot')) {
-            const idx = parseInt(t.getAttribute('data-i'));
-            show(idx);
-            pauseAutoAfterManual();
-        }
-    });
+    // Клик по точке
+    if (t.classList.contains('promo-dot')) {
+        const idx = parseInt(t.getAttribute('data-i'));
+        show(idx);
+        pauseAutoAfterManual();
+        return;
+    }
+
+    // Определяем, куда кликнули — левая или правая половина
+    const rect = container.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const half = rect.width / 2;
+
+    if (clickX < half) {
+        // левая половина → предыдущий
+        show(current - 1);
+        pauseAutoAfterManual();
+    } else {
+        // правая половина → следующий
+        show(current + 1);
+        pauseAutoAfterManual();
+    }
+});
 
     // Старт
     build();
