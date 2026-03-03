@@ -157,6 +157,87 @@
         footer a:hover {
             text-decoration: underline;
         }
+    /* ──────────────────────────────────────────────
+   Promo Carousel
+─────────────────────────────────────────────── */
+.promo-banner {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a2e, #2a1a4a);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 0 auto 60px;
+    max-width: 1000px;
+    box-shadow: 0 8px 30px rgba(102,44,197,0.3);
+    aspect-ratio: 1000 / 500;   /* <-- подберите под ваши картинки, например 2:1 или 16:9 */
+}
+
+.promo-banner .slides {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.promo-banner .slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+}
+
+.promo-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Стрелки */
+.promo-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    user-select: none;
+}
+
+.promo-arrow:hover { opacity: 1; }
+.promo-arrow.prev { left: 16px; }
+.promo-arrow.next { right: 16px; }
+
+/* Индикаторы (точки) — опционально */
+.promo-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.promo-dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.promo-dot.active {
+    background: #a78bfa;
+}
     </style>
     <!-- Favicon -->
     <link rel="icon" href="/open.png" type="image/png">
@@ -181,10 +262,10 @@
             Treat yourself to champion gear — grab original Safe Cracking merch!
         </div>
 
-        <!-- Баннер вместо Promo Slider (замени картинку на свою) -->
-        <div class="promo-banner">
-            <img src="promo.png" alt="Promo Banner">
-        </div>
+        <!-- Promo Carousel -->
+<div class="promo-banner" id="promo-carousel">
+    <!-- картинки будут вставляться сюда через JS -->
+</div>
 
         <!-- Магазин Ecwid -->
         <h2>Champion Collection</h2>
@@ -243,5 +324,122 @@
         <p>© Safe Cracking 2026 | Official merch store</p>
         Check our <a href="/privacy">Privacy Policy</a>.
     </footer>
+    <!-- Promo Carousel logic -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('promo-carousel');
+        if (!container) return;
+
+        // ←←← Здесь укажите имена файлов через запятую
+        const imagesStr = "promo.png";
+        //                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        //                     поменяйте на свои имена файлов
+
+        const images = imagesStr
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean);
+
+        if (images.length === 0) return;
+
+        // Если только одна картинка — показываем как раньше
+        if (images.length === 1) {
+            container.innerHTML = `<img src="${images[0]}" alt="Promo Banner">`;
+            return;
+        }
+
+        // ── Карусель ───────────────────────────────────────
+        let currentIndex = 0;
+        let autoInterval = null;
+        let isManualMode = false;
+        const AUTO_DELAY = 5000;     // 5 секунд в авто-режиме
+        const MANUAL_DELAY = 20000;  // 20 секунд после ручного действия
+
+        function buildCarousel() {
+            let html = '<div class="slides">';
+
+            images.forEach((src, i) => {
+                html += `<div class="slide"><img src="${src}" alt="Promo ${i+1}"></div>`;
+            });
+
+            html += '</div>';
+
+            // Стрелки
+            html += `
+                <button class="promo-arrow prev" aria-label="Previous">←</button>
+                <button class="promo-arrow next" aria-label="Next">→</button>
+            `;
+
+            // Точки (индикаторы)
+            html += '<div class="promo-dots">';
+            images.forEach((_, i) => {
+                html += `<div class="promo-dot ${i===0 ? 'active' : ''}" data-index="${i}"></div>`;
+            });
+            html += '</div>';
+
+            container.innerHTML = html;
+        }
+
+        function goTo(index) {
+            currentIndex = (index + images.length) % images.length;
+            const slides = container.querySelector('.slides');
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+            // обновляем точки
+            container.querySelectorAll('.promo-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        function startAuto() {
+            if (autoInterval) clearInterval(autoInterval);
+            autoInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % images.length;
+                goTo(currentIndex);
+            }, AUTO_DELAY);
+        }
+
+        function restartAutoAfterManual() {
+            if (autoInterval) clearInterval(autoInterval);
+            isManualMode = true;
+
+            setTimeout(() => {
+                isManualMode = false;
+                startAuto();
+            }, MANUAL_DELAY);
+        }
+
+        // ── События ────────────────────────────────────────
+        container.addEventListener('click', e => {
+            const t = e.target;
+
+            if (t.classList.contains('next')) {
+                goTo(currentIndex + 1);
+                restartAutoAfterManual();
+            }
+            else if (t.classList.contains('prev')) {
+                goTo(currentIndex - 1);
+                restartAutoAfterManual();
+            }
+            else if (t.classList.contains('promo-dot')) {
+                const idx = parseInt(t.dataset.index, 10);
+                goTo(idx);
+                restartAutoAfterManual();
+            }
+        });
+
+        // Старт
+        buildCarousel();
+        startAuto();
+
+        // Пауза при наведении (опционально, можно убрать)
+        container.addEventListener('mouseenter', () => {
+            if (autoInterval) clearInterval(autoInterval);
+        });
+        container.addEventListener('mouseleave', () => {
+            if (!isManualMode) startAuto();
+        });
+    });
+</script>
 </body>
 </html>
