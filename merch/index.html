@@ -336,15 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const MANUAL_TIME = 20000;  // 20 сек после клика
 
     function build() {
-        // Предзагрузка первой картинки для стабильной высоты
-    const preloadImg = new Image();
-    preloadImg.src = images[0];
-    preloadImg.onload = () => {
-        if (container) {
-            container.style.height = `${preloadImg.naturalHeight}px`;   // или max-height
-            // или просто container.style.minHeight = `${preloadImg.naturalHeight}px`;
-        }
-    };
     let html = '<div class="slides">';
     images.forEach((src, i) => {
         html += `<div class="slide"><img src="${src}" alt="Slide ${i+1}"></div>`;
