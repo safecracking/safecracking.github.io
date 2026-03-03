@@ -76,19 +76,18 @@
         }
 
         /* Баннер вместо Promo Slider */
-        .promo-banner {
-            background: linear-gradient(135deg, #1a1a2e, #2a1a4a);
-            border-radius: 16px;
-            overflow: hidden;
-            margin: 0 auto 60px;
-            max-width: 1000px;
-            box-shadow: 0 8px 30px rgba(102,44,197,0.3);
-        }
-        .promo-banner img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+.promo-banner {
+    /* убрать aspect-ratio */
+    min-height: 400px;          /* или сколько тебе комфортно */
+    height: auto;
+    max-height: 720px;
+}
+
+.promo-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;          /* обрезает края, но заполняет весь блок */
+}
 
         /* Блок магазина */
         #my-ecwid-store {
@@ -331,7 +330,7 @@
         if (!container) return;
 
         // ←←← Здесь укажите имена файлов через запятую
-        const imagesStr = "promo.png";
+        const imagesStr = "promo.png,promo2.png";
         //                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
         //                     поменяйте на свои имена файлов
 
