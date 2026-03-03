@@ -391,6 +391,91 @@ document.addEventListener('DOMContentLoaded', function() {
     show(0);
     startAuto();
 
+        // ─── Свайп / drag support ───────────────────────────────
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+
+    const slides = container.querySelector('.slides');
+
+    // Touch события
+    slides.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+        isDragging = true;
+        startX = e.changedTouches[0].clientX - currentTranslate;
+        slides.style.transition = 'none';
+    }, { passive: true });
+
+    slides.addEventListener('touchmove', e => {
+        if (!isDragging) return;
+        const currentPosition = e.touches[0].clientX;
+        currentTranslate = currentPosition - startX;
+        slides.style.transform = `translateX(${currentTranslate}px)`;
+    }, { passive: true });
+
+    slides.addEventListener('touchend', e => {
+        isDragging = false;
+        touchEndX = e.changedTouches[0].screenX;
+        slides.style.transition = 'transform 0.7s ease-in-out';
+
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > 50) {  // минимальный порог свайпа
+            if (diff > 0) {
+                // свайп влево → следующий
+                show(current + 1);
+            } else {
+                // свайп вправо → предыдущий
+                show(current - 1);
+            }
+            pauseAutoAfterManual();
+        } else {
+            // маленький свайп → возвращаем на место
+            show(current);
+        }
+
+        currentTranslate = 0;
+    }, { passive: true });
+
+    // Mouse drag (для десктопа, опционально, но удобно)
+    slides.addEventListener('mousedown', e => {
+        isDragging = true;
+        startX = e.clientX - currentTranslate;
+        slides.style.transition = 'none';
+        slides.style.cursor = 'grabbing';
+    });
+
+    slides.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        const currentPosition = e.clientX;
+        currentTranslate = currentPosition - startX;
+        slides.style.transform = `translateX(${currentTranslate}px)`;
+    });
+
+    slides.addEventListener('mouseup mouseleave', () => {
+        if (!isDragging) return;
+        isDragging = false;
+        slides.style.transition = 'transform 0.7s ease-in-out';
+        slides.style.cursor = 'grab';
+
+        const movedBy = currentTranslate;
+
+        if (Math.abs(movedBy) > 100) {  // порог для мыши чуть больше
+            if (movedBy < 0) {
+                show(current + 1);
+            } else {
+                show(current - 1);
+            }
+            pauseAutoAfterManual();
+        } else {
+            show(current);
+        }
+
+        currentTranslate = 0;
+    });
+
     // Пауза при наведении (опционально, можно удалить эти 8 строк)
     container.addEventListener('mouseenter', () => {
         if (autoTimer) clearInterval(autoTimer);
