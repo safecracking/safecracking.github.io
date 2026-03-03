@@ -87,6 +87,18 @@
     height: auto;
 }
 
+#promo-carousel {
+    visibility: hidden;
+    transition: visibility 0s linear 0.4s, opacity 0.4s ease-out;
+    opacity: 0;
+}
+
+#promo-carousel.ready {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease-in;
+}
+
 .promo-banner .slides {
     display: flex;
     width: 100%;
@@ -412,6 +424,8 @@ document.addEventListener('DOMContentLoaded', function() {
     build();
     show(0);
     startAuto();
+
+    container.classList.add('ready');
 
     // Пауза при наведении (опционально, можно удалить эти 8 строк)
     container.addEventListener('mouseenter', () => {
